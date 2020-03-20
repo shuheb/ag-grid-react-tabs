@@ -18,7 +18,8 @@ class App extends Component {
         super(props);
 
         this.state = {
-            gridState: []
+            gridState: [],
+            tabIndex: -1
         }
     }
 
@@ -27,8 +28,21 @@ class App extends Component {
         let gridState = JSON.parse(window.localStorage.getItem('gridState'));
 
         if (gridState) {
-            this.props.actions.restoreState(gridState)
+            this.props.actions.restoreState(gridState);
+
+            let currentTab = window.localStorage.getItem('tabIndex')
+
+            if (!currentTab) {
+                currentTab = this.state.tabIndex;
+            } else {
+                currentTab = Number(currentTab);
+            }
+
+            this.setState({
+                tabIndex: currentTab
+            })
         }
+
     }
 
     // creates a new tab for a grid, an action is dispatched with a url for a dataset and the column definitions
@@ -51,19 +65,24 @@ class App extends Component {
     saveAllTabs(event) {
         let gridState = JSON.stringify(this.props.grids);
         window.localStorage.setItem('gridState', gridState)
+        let tabIndex = this.state.tabIndex;
+        window.localStorage.setItem('tabIndex',tabIndex);
     }
 
     render() {
-        const tabs = this.props.grids.map(g => <Tab key={g.name}>{g.name}</Tab>);
+        const tabs = this.props.grids.map(g => <Tab  key={g.name}>{g.name}</Tab>);
         const tabPanels = this.props.grids.map(g => <TabPanel key={g.name}><Provider store={store}><MyGrid
             gridId={g.name} gridState={this.state.gridState}/></Provider></TabPanel>);
+
         return (
             <div>
                 <button className={'button'} onClick={this.addNewTab.bind(this)}>Add Tab</button>
                 <button className={'button'} style={{marginLeft: '10px'}} onClick={this.saveAllTabs.bind(this)}>Save All
                     Tabs
                 </button>
-                <Tabs>
+                <Tabs selectedIndex={this.state.tabIndex} onSelect={index => {
+                    console.log(index)
+                    this.setState({tabIndex: index})}}>
                     <TabList>
                         {tabs}
                     </TabList>
