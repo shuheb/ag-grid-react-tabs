@@ -1,13 +1,16 @@
-import {applyMiddleware, createStore} from 'redux';
+import { applyMiddleware, createStore } from "redux";
 
 import gridReducer from "./reducers/gridReducer";
-import logger from 'redux-logger'
+import logger from "redux-logger";
 
 import thunk from "redux-thunk";
 
 const initialState = {
-    grids: [
-        ],
+  grids: []
 };
 
-export default createStore(gridReducer, initialState, applyMiddleware(thunk, logger));
+export default createStore(
+  gridReducer,
+  initialState,
+  applyMiddleware(thunk, logger)
+);

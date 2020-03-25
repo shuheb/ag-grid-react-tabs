@@ -6,7 +6,7 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import 'ag-grid-enterprise'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {actions} from "./actions/gridActions";
+import {actions} from "./reducers/gridActions";
 
 import {LicenseManager} from "ag-grid-enterprise";
 

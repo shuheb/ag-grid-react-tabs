@@ -1,4 +1,4 @@
-import {types} from "../types/gridTypes";
+import {types} from "./gridTypes";
 
 export default function gridReducer(state = {}, action) {
     const payload = action.payload;
