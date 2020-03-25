@@ -1,4 +1,4 @@
-import {types} from "../types/gridTypes";
+import {types} from "../reducers/gridTypes";
 import store from "../store";
 
 export const actions = {
